@@ -17,7 +17,7 @@ title: Spring 5 adventure
 email: marek.szczepansky@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   Here I descriebe my Spring 5 adventure upto taking Spring 5 certification.
-baseurl: "" # the subpath of your site, e.g. /blog
+baseurl: "Spring-5" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: mszczy
 github_username:  marekszczepansky
