@@ -2,9 +2,9 @@
 # Feel free to add content and custom Front Matter to this file.
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 
-layout: home
+layout: page
 ---
-[welcome](/welcome)
+[welcome](/welcome | relative_url)
 
 <ul>
   {% for post in site.posts reversed %}
