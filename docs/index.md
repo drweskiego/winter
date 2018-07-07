@@ -4,7 +4,7 @@
 
 layout: page
 ---
-[welcome](/welcome | relative_url)
+[welcome]({{ "/welcome" | relative_url }})
 
 <ul>
   {% for post in site.posts reversed %}
