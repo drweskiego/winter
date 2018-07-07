@@ -9,6 +9,7 @@ title: Spring - DI
 ``` java
 @Configuration
 public class ApplicationConfig {
+
     @Bean
     @Description("Handles all book related use-cases")
     public BookService bookService() {
@@ -17,10 +18,15 @@ public class ApplicationConfig {
 
     @Bean
     @Description("Provides access to data from the Books table")
-    public BookRepository bookRepository() {
-        return new JdbcBookService(dataSource());
+    // @Autowired DataSource also possible
+    public BookRepository bookRepository(DataSource dataSource) {
+        return new JdbcBookService(dataSource);
     }
+}
 
+@Configuration
+@Import(ApplicationConfig.class )
+public class TestInfrastructureConfig {
     @Bean
     @Description("Data-source for the underlying RDB we are using")
     public DataSource dataSource() {
@@ -47,6 +53,39 @@ TransferService ts2 = context.getBean(“transferService”, TransferService.cla
 // name from method name id no defined in @Bean
 TransferService ts3 = (TransferService) context.getBean(“transferService”);
 ```
+
+It is **not illegal** to define the same bean more than once
+
+```java
+ @Import({ Config1.class, Config2.class }) public class TestApp {
+public class TestApp { 
+    public static void main(String[] args) {
+        ApplicationContext context = SpringApplication.run(TestApp.class);
+
+        // expected Id=example1
+        System.out.println("Id=" + context.getBean("example"));
+    }
+}
+
+@Configuration
+@Order(2)
+public class Config1 {
+    @Bean
+    public String example() {
+        return new String("example1");
+    }
+}
+
+@Configuration
+@Order(1)
+public class Config2 {
+    @Bean
+    public String example() {
+        return new String("example2");
+    }
+}
+```
+
 
 ## Environment
 
@@ -80,6 +119,7 @@ public class AnnotationConfig {
 
 @Component("transferService")
 @Scope("prototype")
+// @Scope(scopeName = "prototype")
 @Profile("dev")
 @Lazy(false)
 public class TransferServiceImpl implements TransferService {
@@ -119,6 +159,7 @@ equals to
 public class TransferConfiguration {
     @Bean(name="transferService")
     @Scope("prototype")
+    // @Scope(scopeName = "prototype")
     @Profile("dev")
     @Lazy(false)
     public TransferService tsvc() {
@@ -158,7 +199,7 @@ Concise (pass several params at once)| Inherited automatically
 #### java
 
 - Pros
-  – Write any Java code you need
+      – Write any Java code you need
   - Strong type checking enforced by compiler (and IDE) 
   – Can be used for all classes (not just your own)
 - Cons
@@ -176,6 +217,14 @@ Concise (pass several params at once)| Inherited automatically
   - Harder to debug/maintain
   - Only works for your own code
   - Merges configuration and code (bad sep. of concerns)
+
+## Scopes
+
+--- | ---
+singleton|A single instance is used
+prototype|A new instance is created each time the bean is referenced
+session|A new instance is created once per user session - web environment only
+requestA new instance is created once per request – web environment only
 
 ## Lifecycle methods
 
