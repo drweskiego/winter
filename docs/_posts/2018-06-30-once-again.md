@@ -2,7 +2,7 @@
 layout: post
 title: Once again
 ---
-# Spring
+# Spring - DI
 
 ## Java based configuration
 
