@@ -220,6 +220,7 @@ Concise (pass several params at once)| Inherited automatically
 
 ## Scopes
 
+scope|desc
 --- | ---
 singleton|A single instance is used
 prototype|A new instance is created each time the bean is referenced
