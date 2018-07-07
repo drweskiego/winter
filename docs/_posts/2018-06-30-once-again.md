@@ -89,24 +89,116 @@ public class Config2 {
 
 ## Environment
 
+Properties from many sources:
+– System Environment Variables - auto
+– JVM System Properties - auto
+– Java Properties Files
+– Servlet Context Parameters
+– JNDI
+
+Default file: `app.properties`
+
+avaliable in:
+- `@Bean` methods
+- component properties (any visibility)
+- `@Autowired`  setters methods
+- `@Autowored` constructors
+
+```yaml
+db.driver=org.postgresql.Driver
+db.url=jdbc:postgresql:localhost/transfer
+db.user=transfer-app
+db.password=secret45
+ ```
+
 ```java
+@Configuration
+@PropertySource ( “classpath:/com/organization/config/app.properties” )
+@PropertySource ( “file:config/local-${ENV}.properties” )
+public class DbConfig {
+    Environment env;
+    @Autowired
+    public DbConfig(Environment env) {
+        this.env = env; 
+    }
+
+    @Bean
+    public DataSource dataSource(
+            @Value("${db.url}") String url
+            @Value("#{environment['db.user']}") String user) { 
+        BasicDataSource ds = new BasicDataSource();
+        ds.setDriverClassName( env.getProperty("db.driver"));
+        ds.setUrl(url);
+        ds.setUser(user);
+        ds.setPassword( env.getProperty( "db.password" ));
+        return ds;
+    }
+}
+
 @Autowired
 public TransferServiceImpl(@Value("${daily.limit}") int max) {
-    this.maxTransfersPerDay = max; 
+    this.maxTransfersPerDay = max;
 }
 
 @Autowired
-public void setDailyLimit(@Value("${daily.limit}") int max) {
-    this.maxTransfersPerDay = max; 
+// fallback 10000
+public void setDailyLimit(@Value("${daily.limit : 10000}") int max) {
+    this.maxTransfersPerDay = max;
 }
-
 ```
 
 ## SpEL
 
+default references: `environment`, `systemProperties`, `systemEnvironment`
+
 ```java
-@Value("#{environment['daily.limit']}") int maxTransfersPerDay;
+@Configuration
+class TaxConfig {
+    // fallback 10000
+    @Value("#{environment['daily.limit'] ?: 10000}") int maxTransfersPerDay;
+
+    @Bean
+    public TaxCalculator taxCalculator2 (@Value("#{ systemProperties['user.region'] }") String region) {
+        return new TaxCalculator( region ); 
+    }
+}
+
+@Configuration
+class AnotherConfig {
+    @Value("#{taxCalculator2.methodName}") KeyGenerator kgen;
+    @Value("#{new java.net.URL(environment['home.page']).host}") String hostname;
+}
 ```
+
+http://docs.spring.io/spring/docs/current/spring-framework-reference/html/expressions.html
+
+## Profiles
+
+```java
+@Configuration
+@Profile(“jpa”)
+@PropertySource ( “dev.properties” )
+public class DataSourceConfig {
+    @Bean(name="dataSource")
+    @Profile("dev")
+    public DataSource dataSourceForDev() {
+        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
+        return builder.setName("testdb");
+    }
+    @Bean(name="dataSource")
+    @Profile("!dev")
+    public DataSource dataSourceForProd() {
+        BasicDataSource dataSource = new BasicDataSource(); ...
+        return dataSource;
+    }
+}
+```
+
+Define profile:
+
+- command line: `-Dspring.profiles.active=dev,jpa`
+- code: `System.setProperty("spring.profiles.active", "dev,jpa"); SpringApplication.run(AppConfig.class);`
+- test: `@ActiveProfiles`
 
 ## Annotation configuration
 
@@ -222,15 +314,15 @@ Concise (pass several params at once)| Inherited automatically
 
 scope | desc
 --- | ---
-singleton  | Lasts as long as its ApplicationContext
-prototype  | A new instance is created each time the bean is referenced, lasts as long as you refer to it, then garbage collected
-session    | A new instance is created once per user session - web environment only, lasts as long as user's HTTP session
-request    | A new instance is created once per request – web environment only, lasts as long as user's HTTP request
-application| Lasts as long as the ServletContext (Spring 4.0)
-global     | Lasts as long as a global HttpSession in a Portlet application (_obsolete from Spring 5_)
-thread     | Lasts as long as its thread – defined in Spring but not registered by default
-websocket  | Lasts as long as its websocket (Spring 4.2)
-refresh    | Can outlive reload of its application context. Difficult to do well, assumes Spring Cloud Configuration Server
+**singleton**  | Lasts as long as its ApplicationContext
+**prototype**  | A new instance is created each time the bean is referenced, lasts as long as you refer to it, then garbage collected
+**session**    | A new instance is created once per user session - web environment only, lasts as long as user's HTTP session
+**request**    | A new instance is created once per request – web environment only, lasts as long as user's HTTP request
+**application**| Lasts as long as the ServletContext (Spring 4.0)
+**global**     | Lasts as long as a global HttpSession in a Portlet application (_obsolete from Spring 5_)
+**thread**     | Lasts as long as its thread – defined in Spring but not registered by default
+**websocket**  | Lasts as long as its websocket (Spring 4.2)
+**refresh**    | Can outlive reload of its application context. Difficult to do well, assumes Spring Cloud Configuration Server
 
 ## Lifecycle methods
 
@@ -314,3 +406,32 @@ public @interface MyTransactionalService {
 ```
 
 `@Service` is used to annotate other annotation - is caled meta-annotation
+
+## DI implementation
+
+Java Configuration uses CGLIB for inheritance-based subclasses
+
+CGLIB does not support classes with constructors, Spring now uses Objenesis internally to overcome this
+
+```java
+@Configuration
+public class AppConfig {
+    @Bean public AccountRepository accountRepository() { ... }
+    @Bean public TransferService transferService() { ... }
+}
+
+// autogenerated CGLIB
+public class AppConfig$$EnhancerByCGLIB$ extends AppConfig { 
+    public AccountRepository accountRepository() {
+        // if bean is in the applicationContext, then return bean
+        // else call super.accountRepository(), store bean in context, return bean
+    }
+    public TransferService transferService() {
+        // if bean is in the applicationContext, then return bean
+        // else call super.transferService(), store bean in context, return bean
+    }
+}
+```
+
+## Factories
+
