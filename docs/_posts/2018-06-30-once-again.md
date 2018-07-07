@@ -220,12 +220,12 @@ Concise (pass several params at once)| Inherited automatically
 
 ## Scopes
 
-scope|desc
+scope | desc
 --- | ---
-singleton|A single instance is used
-prototype|A new instance is created each time the bean is referenced
-session|A new instance is created once per user session - web environment only
-requestA new instance is created once per request – web environment only
+singleton | A single instance is used
+prototype | A new instance is created each time the bean is referenced
+session   | A new instance is created once per user session - web environment only
+request   | A new instance is created once per request – web environment only
 
 ## Lifecycle methods
 
