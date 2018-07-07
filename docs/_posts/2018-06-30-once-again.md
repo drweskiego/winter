@@ -72,8 +72,10 @@ public class TransferServiceImpl implements TransferService {
     private Optional<AccountService> accountService;
     // accountService.ifPresent( s -> {...});
 
-    @Autowired(required-false)
-    public void setAccountRepository(@Qualifier("jdbcAccountRepository") AccountRepository a) { this.accountRepository = a;}
+    @Autowired(required=false)
+    public void setAccountRepository(
+        @Qualifier("jdbcAccountRepository") AccountRepository a
+        ) { this.accountRepository = a; }
 
     @Autowired
     public TransferServiceImpl (@Qualifier("jpaAccountRepository") AccountRepository accRep) {}
@@ -158,3 +160,64 @@ Concise (pass several params at once)| Inherited automatically
   - Harder to debug/maintain
   - Only works for your own code
   - Merges configuration and code (bad sep. of concerns)
+
+## Lifecycle methods
+
+```java
+@Component("transferService")
+public class TransferServiceImpl implements TransferService {
+
+    // any visibility, no args, void, JSR-250
+    // after dependency injection (constructor & setter)
+    @PostConstruct
+    void populateCache() { }
+
+    // any visibility, no args, void, JSR-250
+    // prior to destroj instance, no prototype, no killed process
+    @PreDestroy
+    void flushCache() { }
+}
+```
+
+equals to
+
+```java
+@Configuration
+public class TransferConfiguration {
+    @Bean(name="transferService", initMethod="populateCache", destroyMethod="flushCache")
+    public TransferService tsvc() {
+        return new TransferServiceImpl( accountRepository());
+    }
+}
+
+public class TransferServiceImpl implements TransferService {
+
+    public TransferServiceImpl (AccountRepository jpaAccountRepository) {}
+
+    // @PostConstruct also works
+    void populateCache() { }
+
+    // @PreDestroy also works
+    void flushCache() { }
+}
+```
+
+Annotations commes from **JSR-250**
+Package `javax.annotation`
+Order:
+- constructor
+- setters
+- @PostConstruct
+
+@PretDestroy
+- not called for prototype
+- during `ConfigurableApplicationContext` closing
+- uses JVM shutdown hook
+
+```java
+ ConfigurableApplicationContext context = SpringApplication.run(...);
+ //...
+
+ // calls all @PreDestroy
+ context.close();
+ ```
