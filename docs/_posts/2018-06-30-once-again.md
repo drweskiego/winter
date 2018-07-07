@@ -10,16 +10,19 @@ title: Once again
 @Configuration
 public class ApplicationConfig {
     @Bean
+    @Description("Handles all book related use-cases")
     public BookService bookService() {
         return new BookServiceImpl(bookRepository());
     }
 
     @Bean
+    @Description("Provides access to data from the Books table")
     public BookRepository bookRepository() {
         return new JdbcBookService(dataSource());
     }
 
     @Bean
+    @Description("Data-source for the underlying RDB we are using")
     public DataSource dataSource() {
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName("org.postgresql.Driver");
@@ -28,6 +31,20 @@ public class ApplicationConfig {
         ds.setPasswort("s3cret");
     }
 }
+```
+`@Configuration` is a **bean**
+
+```java
+// create spring application from config
+ApplicationContext context = SpringApplication.run( ApplicationConfig.class );
+
+// No need for bean id if type is unique
+TransferService ts1 = context.getBean(TransferService.class );
+// Use typed method to avoid cast
+TransferService ts2 = context.getBean(“transferService”, TransferService.class);
+// Classic way: cast is needed
+// name from method name id no defined in @Bean
+TransferService ts3 = (TransferService) context.getBean(“transferService”);
 ```
 
 ## Environment
@@ -105,7 +122,7 @@ public class TransferConfiguration {
     @Scope("prototype")
     @Profile("dev")
     @Lazy(false)
-    public TransferService tsvc() { 
+    public TransferService tsvc() {
         return new TransferServiceImpl( accountRepository());
     }
 }
@@ -221,3 +238,24 @@ Order:
  // calls all @PreDestroy
  context.close();
  ```
+
+ ## stereotypes
+
+ - `@Component` stareotypes:
+   - `@Service` - service klases
+   - `@Repository` - database access
+   - `@Controller` - web MVC
+   - `@RestController` - web MVC
+   - `@Configuration` - java configuration
+
+```java
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+@Service
+@Transactional(timeout=60)
+public @interface MyTransactionalService {
+    String value() default "";
+}
+```
+
+`@Service` is used to annotate other annotation - is caled meta-annotation
