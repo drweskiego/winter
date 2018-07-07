@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Once again
+title: Spring - DI
 ---
 # Spring - DI
 
@@ -218,15 +218,15 @@ public class TransferServiceImpl implements TransferService {
 }
 ```
 
-Annotations commes from **JSR-250**
-Package `javax.annotation`
-Order:
+Annotations commes from **JSR-250** <br>
+Package `javax.annotation` <br>
+Order
 - constructor
 - setters
 - @PostConstruct
 
 @PretDestroy
-- not called for prototype
+- not called for **prototype**
 - during `ConfigurableApplicationContext` closing
 - uses JVM shutdown hook
 
@@ -238,7 +238,7 @@ Order:
  context.close();
  ```
 
- ## stereotypes
+## stereotypes
 
  - `@Component` stareotypes:
    - `@Service` - service klases
