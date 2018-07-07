@@ -140,21 +140,21 @@ Concise (pass several params at once)| Inherited automatically
 #### java
 
 - Pros
--– Write any Java code you need
--- Strong type checking enforced by compiler (and IDE) 
--– Can be used for all classes (not just your own)
+  – Write any Java code you need
+  - Strong type checking enforced by compiler (and IDE) 
+  – Can be used for all classes (not just your own)
 - Cons
--- More verbose than annotations
--– Is centralized in one (or a few) places
+  - More verbose than annotations
+  – Is centralized in one (or a few) places
 
 #### annotation
 
 - Pros
--- Nice for your own beans
--– Single place to edit (just the class) 
--– Allows for very rapid development
+  - Nice for your own beans
+  – Single place to edit (just the class) 
+  – Allows for very rapid development
 - Cons
--– Configuration spread across your code base 
--- Harder to debug/maintain
--- Only works for your own code
--- Merges configuration and code (bad sep. of concerns)
+  – Configuration spread across your code base 
+  - Harder to debug/maintain
+  - Only works for your own code
+  - Merges configuration and code (bad sep. of concerns)
