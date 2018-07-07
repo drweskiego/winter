@@ -96,13 +96,13 @@ Properties from many sources:
 – Servlet Context Parameters
 – JNDI
 
-Default file: `app.properties`
-
 avaliable in:
 - `@Bean` methods
 - component properties (any visibility)
 - `@Autowired`  setters methods
 - `@Autowored` constructors
+
+Default file: `app.properties`
 
 ```yaml
 db.driver=org.postgresql.Driver
@@ -170,7 +170,7 @@ class AnotherConfig {
 }
 ```
 
-http://docs.spring.io/spring/docs/current/spring-framework-reference/html/expressions.html
+[http://docs.spring.io/spring/docs/current/spring-framework-reference/html/expressions.html](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/expressions.html)
 
 ## Profiles
 
@@ -210,8 +210,8 @@ public class AnnotationConfig {
 }
 
 @Component("transferService")
-@Scope("prototype")
 // @Scope(scopeName = "prototype")
+@Scope("prototype")
 @Profile("dev")
 @Lazy(false)
 public class TransferServiceImpl implements TransferService {
@@ -228,19 +228,9 @@ public class TransferServiceImpl implements TransferService {
     @Autowired
     public TransferServiceImpl (@Qualifier("jpaAccountRepository") AccountRepository accRep) {}
     // equal to 
+    @Autowired
     public TransferServiceImpl (AccountRepository jpaAccountRepository) {}
 
-    // any visibility, no args, void, JSR-250
-    // In javax.annotation package
-    // after dependency injection
-    @PostConstruct
-    void populateCache() { }
-
-    // any visibility, no args, void, JSR-250
-    // In javax.annotation package
-    // prior to destroj instance
-    @PreDestroy
-    void flushCache() { }
 }
 ```
 
@@ -250,8 +240,8 @@ equals to
 @Configuration
 public class TransferConfiguration {
     @Bean(name="transferService")
-    @Scope("prototype")
     // @Scope(scopeName = "prototype")
+    @Scope("prototype")
     @Profile("dev")
     @Lazy(false)
     public TransferService tsvc() {
@@ -263,17 +253,6 @@ public class TransferServiceImpl implements TransferService {
 
     public TransferServiceImpl (AccountRepository jpaAccountRepository) {}
 
-    // any visibility, no args, void, JSR-250
-    // In javax.annotation package
-    // after dependency injection
-    @PostConstruct
-    void populateCache() { }
-
-    // any visibility, no args, void, JSR-250
-    // In javax.annotation package
-    // prior to destroj instance
-    @PreDestroy
-    void flushCache() { }
 }
 ```
 
@@ -405,7 +384,7 @@ public @interface MyTransactionalService {
 }
 ```
 
-`@Service` is used to annotate other annotation - is caled meta-annotation
+`@Service` is used to annotate other annotation - is caled **meta-annotation**
 
 ## DI implementation
 
@@ -435,3 +414,29 @@ public class AppConfig$$EnhancerByCGLIB$ extends AppConfig {
 
 ## Factories
 
+```java
+public class AccountServiceFactoryBean implements FactoryBean <AccountService>
+{
+    // never call directly, Spring does this
+    public AccountService getObject() throws Exception {
+    // Conditional logic – for example: selecting the right
+    // implementation or sub-class of AccountService to create return accountService;
+    }
+    public Class<?> getObjectType() { return AccountService.class; }
+    // isSingleton defaults to returning true since Spring V5 }
+}
+
+@Configuration
+public class ServiceConfig {
+    @Bean
+    public AccountServiceFactoryBean accountService() {
+       return new AccountServiceFactoryBean();
+    }
+
+    @Bean
+    //  getObject() called by Spring internally
+    public CustomerService customerService(AccountService accountService) {
+        return new CustomerService(accountService);
+    }
+}
+```
