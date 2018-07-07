@@ -32,6 +32,7 @@ public class ApplicationConfig {
     }
 }
 ```
+
 `@Configuration` is a **bean**
 
 ```java
@@ -65,8 +66,6 @@ public void setDailyLimit(@Value("${daily.limit}") int max) {
 ## SpEL
 
 ```java
-
-
 @Value("#{environment['daily.limit']}") int maxTransfersPerDay;
 ```
 
