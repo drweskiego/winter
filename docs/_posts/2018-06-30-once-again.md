@@ -222,10 +222,15 @@ Concise (pass several params at once)| Inherited automatically
 
 scope | desc
 --- | ---
-singleton | A single instance is used
-prototype | A new instance is created each time the bean is referenced
-session   | A new instance is created once per user session - web environment only
-request   | A new instance is created once per request – web environment only
+singleton  | Lasts as long as its ApplicationContext
+prototype  | A new instance is created each time the bean is referenced, lasts as long as you refer to it, then garbage collected
+session    | A new instance is created once per user session - web environment only, lasts as long as user's HTTP session
+request    | A new instance is created once per request – web environment only, lasts as long as user's HTTP request
+application| Lasts as long as the ServletContext (Spring 4.0)
+global     | Lasts as long as a global HttpSession in a Portlet application (_obsolete from Spring 5_)
+thread     | Lasts as long as its thread – defined in Spring but not registered by default
+websocket  | Lasts as long as its websocket (Spring 4.2)
+refresh    | Can outlive reload of its application context. Difficult to do well, assumes Spring Cloud Configuration Server
 
 ## Lifecycle methods
 
