@@ -219,7 +219,8 @@ public class TransferServiceImpl implements TransferService {
 ```
 
 Annotations commes from **JSR-250** <br>
-Package `javax.annotation` <br>
+Package `javax.annotation`
+
 Order
 - constructor
 - setters
