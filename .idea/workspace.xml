@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="084e5512-4d82-4d2e-82bf-4289ef0de2e7" name="Default" comment="" />
+    <list default="true" id="084e5512-4d82-4d2e-82bf-4289ef0de2e7" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/docs/_posts/2018-07-08-spring-internals.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_posts/2018-07-08-spring-internals.md" afterDir="false" />
+    </list>
+    <list id="63fbd68e-0fab-49b5-ab04-1aec8a2d38bd" name="blabla" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -33,8 +38,18 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Spring-5" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Spring-5" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="Scope" />
-      <pane id="ProjectPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -64,37 +79,159 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="084e5512-4d82-4d2e-82bf-4289ef0de2e7" name="Default" comment="" />
+      <changelist id="63fbd68e-0fab-49b5-ab04-1aec8a2d38bd" name="blabla" comment="" />
       <created>1530973374531</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1530973374531</updated>
       <workItem from="1530973375673" duration="167000" />
+      <workItem from="1530981788014" duration="4168000" />
     </task>
+    <task id="LOCAL-00001" summary="DI">
+      <created>1530981953058</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1530981953058</updated>
+    </task>
+    <task id="LOCAL-00002" summary="DI">
+      <created>1530983116837</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1530983116837</updated>
+    </task>
+    <task id="LOCAL-00003" summary="DI">
+      <created>1530991971434</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1530991971434</updated>
+    </task>
+    <task id="LOCAL-00004" summary="DI">
+      <created>1530992437398</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1530992437398</updated>
+    </task>
+    <task id="LOCAL-00005" summary="DI">
+      <created>1530992525995</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1530992525995</updated>
+    </task>
+    <task id="LOCAL-00006" summary="DI">
+      <created>1530993191424</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1530993191424</updated>
+    </task>
+    <task id="LOCAL-00007" summary="DI">
+      <created>1531000151014</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1531000151014</updated>
+    </task>
+    <task id="LOCAL-00008" summary="DI">
+      <created>1531002342843</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1531002342843</updated>
+    </task>
+    <task id="LOCAL-00009" summary="DI">
+      <created>1531002448450</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1531002448450</updated>
+    </task>
+    <task id="LOCAL-00010" summary="DI">
+      <created>1531002567476</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1531002567476</updated>
+    </task>
+    <task id="LOCAL-00011" summary="DI">
+      <created>1531003818143</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1531003818143</updated>
+    </task>
+    <task id="LOCAL-00012" summary="DI">
+      <created>1531006576715</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1531006576715</updated>
+    </task>
+    <task id="LOCAL-00013" summary="DI">
+      <created>1531007769508</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1531007769508</updated>
+    </task>
+    <task id="LOCAL-00014" summary="DI">
+      <created>1531059026748</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1531059026748</updated>
+    </task>
+    <task id="LOCAL-00015" summary="DI">
+      <created>1531060764292</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1531060764292</updated>
+    </task>
+    <task id="LOCAL-00016" summary="DI">
+      <created>1531066002616</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1531066002617</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Internals">
+      <created>1531068313767</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1531068313767</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="167000" />
+    <option name="totallyTimeSpent" value="4335000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="3" y="25" width="1791" height="1065" extended-state="0" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24971752" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info active="true" anchor="bottom" id="Version Control" visible="true" weight="0.32910052" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="7" visible="true" weight="0.32910052" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -128,5 +265,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="DI" />
+    <MESSAGE value="Internals" />
+    <option name="LAST_COMMIT_MESSAGE" value="Internals" />
   </component>
 </project>
