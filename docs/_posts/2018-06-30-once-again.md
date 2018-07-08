@@ -230,9 +230,12 @@ public class TransferServiceImpl implements TransferService {
 
     @Autowired
     public TransferServiceImpl (@Qualifier("jpaAccountRepository") AccountRepository accRep) {}
-    // equal to 
+    // equal to
     @Autowired
     public TransferServiceImpl (AccountRepository jpaAccountRepository) {}
+    // equal to
+    @Resource("jpaAccountRepository")
+    public TransferServiceImpl (AccountRepository accRep) {}
 
 }
 ```
