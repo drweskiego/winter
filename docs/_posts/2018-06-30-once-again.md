@@ -371,14 +371,15 @@ Order
  context.close();
  ```
 
-## stereotypes
+## stereotype annotations
 
- - `@Component` stareotypes:
-   - `@Service` - service klases
-   - `@Repository` - database access
-   - `@Controller` - web MVC
-   - `@RestController` - web MVC
-   - `@Configuration` - java configuration
+ - `@Component` root stereotype
+ - `@Service` - service
+ - `@Repository` - database access
+ - `@Controller` - web MVC
+ - `@Indexed` - ...
+ - `@RestController` - web MVC compossed adnotation - out of stereotypes package
+ - `@Configuration` - java configuration - out of stereotypes package
 
 ```java
 @Retention(RetentionPolicy.RUNTIME)

@@ -26,6 +26,7 @@ title: Spring internals
     - `void	postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory)` method signature
     - declre by `@Component` class annotation or `@Bean` **static** method annotation
     - spring implementations reads properties, registaring scopes...
+    - e.g. `PropertySourcesPlaceholderConfigurer` - resolves properties from files/env
 - for each bean
   - Find and create dependences
     - Evaluate dependencies for each bean
@@ -97,6 +98,7 @@ Bean destruction trigered by:
 - never when app killed or fails
 
 Bean destruction steps:
+
 - `@PreDestroy` methods are invoked
 - Beans released for the Garbage Collector to destroy
 
