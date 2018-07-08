@@ -54,7 +54,7 @@ Component Scanning | From Annotation or invented from classname | Directly from 
 @Bean Method | From Annotation or from method name | From method **return type**
 XML | From id or name attribute or invented from classname | From class attribute
 
-If `@Bean` method returns onlu one of many implemented interfaces, only this one can be autowired
+If `@Bean` method returns only one of many implemented **interfaces**, only this one can be autowired
 
 ### LoggingBeanPostProcessor example
 
