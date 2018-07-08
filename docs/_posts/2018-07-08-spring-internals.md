@@ -32,15 +32,17 @@ title: Spring internals
   - Call Setters (injection)
   - **Bean Post Processors**
     - BPP - before init
-      - `public interface BeanPostProcessor` mathod `public Object postProcessBeforeInitialization(Object bean, String beanName);`
+      - `public interface BeanPostProcessor`
+      - method `public Object postProcessBeforeInitialization(Object bean, String beanName);`
     - Initializer
     - BPP - after init
-      - `public interface BeanPostProcessor` mathod `public Object postProcessAfterInitialization(Object bean, String beanName);`
+      - `public interface BeanPostProcessor`
+      - method `public Object postProcessAfterInitialization(Object bean, String beanName);`
     - Example: `CommonAnnotationBeanPostProcessor` enables `@PostConstruct`, `@Resource`
     - bean **proxy** is added here
 - Bean ready
 
-## `LoggingBeanPostProcessor`
+### LoggingBeanPostProcessor example
 
 ```java
 @Component
@@ -67,4 +69,20 @@ API is built into the JDK       | Included in Spring jars
 Requirements: Java interface(s) | Used when interface not available
 All interfaces proxied          | **Cannot** be applied to **final** classes or methods
 
-[https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#aop-pfb-proxy-types]
+(https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#aop-pfb-proxy-types)
+
+## Destruction
+
+Bean destruction trigered by:
+
+- context shutdown: `context.close() //ConfigurableApplicationContext`
+- JVM machine shut down
+- bean goes out od scope
+- never for **prototype** beans
+- never when app killed or fails
+
+Bean destruction steps:
+- `@PreDestroy` methods are invoked
+- Beans released for the Garbage Collector to destroy
+
+
