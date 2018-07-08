@@ -28,6 +28,10 @@ title: Spring internals
     - spring implementations reads properties, registaring scopes...
 - for each bean
   - Find and create dependences
+    - Evaluate dependencies for each bean
+    - `@DependsOn("beanName")` - can force creation order
+    - Get each dependency needed
+      - Create any if need be (recursive)
   - Instattiate Bean (constructor dependenced injection)
   - Call Setters (injection)
   - **Bean Post Processors**
@@ -41,6 +45,16 @@ title: Spring internals
     - Example: `CommonAnnotationBeanPostProcessor` enables `@PostConstruct`, `@Resource`
     - bean **proxy** is added here
 - Bean ready
+
+### Name and Type optaining
+
+Definition | Name | Type
+--- | --- | ---
+Component Scanning | From Annotation or invented from classname | Directly from annotated class
+@Bean Method | From Annotation or from method name | From method **return type**
+XML | From id or name attribute or invented from classname | From class attribute
+
+If `@Bean` method returns onlu one of many implemented interfaces, only this one can be autowired
 
 ### LoggingBeanPostProcessor example
 
@@ -68,7 +82,7 @@ Also called dynamic proxies     | NOT built into JDK
 API is built into the JDK       | Included in Spring jars
 Requirements: Java interface(s) | Used when interface not available
 All interfaces proxied          | **Cannot** be applied to **final** classes or methods
-                                | Uses http://objenesis.org/ for constructors with args
+                                | Uses [Objenesis](http://objenesis.org/) for constructors with args
 
 [Spring docs](https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#aop-pfb-proxy-types)
 
