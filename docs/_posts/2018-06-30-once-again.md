@@ -116,8 +116,8 @@ db.password=secret45
 
 ```java
 @Configuration
-@PropertySource ( “classpath:/com/organization/config/app.properties” )
-@PropertySource ( “file:config/local-${ENV}.properties” )
+@PropertySource ( "classpath:/com/organization/config/app.properties" )
+@PropertySource ( "file:config/local-${ENV}.properties" )
 public class DbConfig {
     Environment env;
     @Autowired

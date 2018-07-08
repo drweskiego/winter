@@ -31,8 +31,40 @@ title: Spring internals
   - Instattiate Bean (constructor dependenced injection)
   - Call Setters (injection)
   - **Bean Post Processors**
-    - BPP
+    - BPP - before init
+      - `public interface BeanPostProcessor` mathod `public Object postProcessBeforeInitialization(Object bean, String beanName);`
     - Initializer
-    - BPP
+    - BPP - after init
+      - `public interface BeanPostProcessor` mathod `public Object postProcessAfterInitialization(Object bean, String beanName);`
+    - Example: `CommonAnnotationBeanPostProcessor` enables `@PostConstruct`, `@Resource`
+    - bean **proxy** is added here
 - Bean ready
 
+## `LoggingBeanPostProcessor`
+
+```java
+@Component
+public class LoggingBeanPostProcessor implements BeanPostProcessor {
+    Logger logger = Logger.getLogger(LoggingBeanPostProcessor.class);
+
+    public Object postProcessBeforeInitialization(Object bean, String beanName) { 
+        return bean; // Remember to return your bean or you'll lose it!
+    }
+
+    public Object postProcessAfterInitialization(Object bean,String beanName) { 
+        logger.info(beanName + ": " + bean.getClass() );
+        return bean; // Remember to return your bean or you'll lose it!
+   }
+}
+```
+
+## Proxy
+
+JDK Proxy | CGLib Proxy
+--- | ---
+Also called dynamic proxies     | NOT built into JDK
+API is built into the JDK       | Included in Spring jars
+Requirements: Java interface(s) | Used when interface not available
+All interfaces proxied          | **Cannot** be applied to **final** classes or methods
+
+[https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#aop-pfb-proxy-types]
