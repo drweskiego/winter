@@ -39,7 +39,7 @@ public class TestInfrastructureConfig {
 }
 ```
 
-`@Configuration` is a **bean**
+`@Configuration` annotated class is a **bean**
 
 ```java
 // create spring application from config
@@ -57,8 +57,9 @@ TransferService ts3 = (TransferService) context.getBean(“transferService”);
 It is **not illegal** to define the same bean more than once
 
 ```java
- @Import({ Config1.class, Config2.class }) public class TestApp {
-public class TestApp { 
+@Configuration
+@Import({ Config1.class, Config2.class })
+public class TestApp {
     public static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(TestApp.class);
 
@@ -90,13 +91,15 @@ public class Config2 {
 ## Environment
 
 Properties from many sources:
-– System Environment Variables - auto
-– JVM System Properties - auto
-– Java Properties Files
-– Servlet Context Parameters
-– JNDI
 
-avaliable in:
+- System Environment Variables - auto
+- JVM System Properties - auto
+- Java Properties Files
+- Servlet Context Parameters
+- JNDI
+
+Avaliable in:
+
 - `@Bean` methods
 - component properties (any visibility)
 - `@Autowired`  setters methods
@@ -104,7 +107,7 @@ avaliable in:
 
 Default file: `app.properties`
 
-```yaml
+```ini
 db.driver=org.postgresql.Driver
 db.url=jdbc:postgresql:localhost/transfer
 db.user=transfer-app

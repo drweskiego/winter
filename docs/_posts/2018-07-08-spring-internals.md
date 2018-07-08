@@ -24,6 +24,7 @@ title: Spring internals
 - **Post Process Bean Definition**
   - `BeanFactoryPostProcessor` beans invoced on bean definitions (able to **update definitions**)
     - `void	postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory)` method signature
+    - declre by `@Component` class annotation or `@Bean` **static** method annotation
     - spring implementations reads properties, registaring scopes...
 - for each bean
   - Find and create dependences
