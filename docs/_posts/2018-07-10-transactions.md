@@ -2,7 +2,7 @@
 layout: post
 title: Spring - Transaction Management
 ---
-## Transaction Management
+# Transaction Management
 
 **Why use Transactions?** _To Enforce the **ACID** Principles_
 
