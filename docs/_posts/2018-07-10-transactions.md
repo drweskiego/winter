@@ -93,6 +93,8 @@ public class RewardNetworkImpl implements RewardNetwork { @Transactional
 }
 ```
 
+## Transaction isolation
+
 4 isolation levels can be used:
 
 - `READ_UNCOMMITTED`
@@ -114,7 +116,8 @@ public class RewardNetworkImpl implements RewardNetwork { @Transactional
   - Prevents phantom reads
   - `@Transactional (isolation=Isolation.SERIALIZABLE)`
 
-  Transaction propagation
+## Transaction propagation
+
   `@Transactional(propagation=Propagation.REQUIRES_NEW)`
 
 Propagation Type | If NO current transaction (txn) exists | If there IS a current transaction (txn)
@@ -126,4 +129,3 @@ SUPPORTS | Don't create a txn, run method without a txn | Use current txn
 REQUIRED (default) | Create a new txn | Use current txn
 REQUIRES_NEW | Create a new txn | Suspend current txn, create a new independent txn
 NESTED | Create a new txn | Create a new nested txn
-
