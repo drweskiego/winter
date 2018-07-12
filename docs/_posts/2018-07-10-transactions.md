@@ -42,13 +42,30 @@ public class TxnConfig {
 }
 ```
 
-Adding transactional behaviour by `@Transactional` annotation.
+Adding transactional behaviour by `@Transactional` annotation (Spring package).
+Spring also support `javax.transaction.Transactional` which provides fewer options.
 
 ```java
-public class RewardNetworkImpl implements RewardNetwork { @Transactional
-public RewardConfirmation rewardAccountFor(Dining d) {
-// atomic unit-of-work
-} }
+public class RewardNetworkImpl implements RewardNetwork { 
+    @Transactional
+    public RewardConfirmation rewardAccountFor(Dining d) {
+    // atomic unit-of-work
+    }
+}
+
+// interface annotation also considered
+@Transactional
+public class RewardNetworkImpl implements RewardNetwork {
+    public RewardConfirmation rewardAccountFor(Dining d) {
+        // atomic unit-of-work
+    }
+
+    @Transactional(timeout=45)
+    // only for override default/class settings
+    public RewardConfirmation updateConfirmation(RewardConfirmantion rc) {
+        // atomic unit-of-work
+    }
+}
 ```
 
 - Target object wrapped in a proxy. Uses an Around advice
@@ -58,3 +75,55 @@ public RewardConfirmation rewardAccountFor(Dining d) {
   - Rollback by default if method throws a RuntimeException (can be overridden)
 - Transaction context bound to current thread. 
 - All controlled by configuration
+
+```java
+public class RewardNetworkImpl implements RewardNetwork { @Transactional
+    public RewardConfirmation rewardAccountFor(Dining d) {
+
+        // exception triggers rolback
+        throw new RuntimeException();
+    }
+
+    // checked exceptions needs to be explicite given
+    // safe (no rollback) exceptions can be also provided
+    @Transactional(rollbackFor=MyCheckedException.class, noRollbackFor={JmxException.class, MailException.class})
+    public RewardConfirmation rewardAccountFor(Dining d) throws Exception { 
+        // ...
+    }
+}
+```
+
+4 isolation levels can be used:
+
+- `READ_UNCOMMITTED`
+  - Lowest isolation level – allows dirty reads
+  - Current transaction can see the results of another uncommitted unit-of-work
+  - Typically used for large, intrusive read-only transactions And/or where the data is constantly changing
+  - `@Transactional (isolation=Isolation.READ_UNCOMMITTED)`
+- `READ_COMMITTED`
+  - Does not allow dirty reads only committed information can be accessed
+  - Default strategy for most databases
+  - `@Transactional (isolation=Isolation.READ_COMMITTED)`
+- `REPEATABLE_READ`
+  - Does not allow dirty reads
+  - Non-repeatable reads are prevented. If a row is read twice in the same transaction, result will always be the same
+  - Might result in locking depending on the DBMS
+  - `@Transactional (isolation=Isolation.REPEATABLE_READ)`
+- `SERIALIZABLE`
+  - Prevents non-repeatable reads and dirty-reads
+  - Prevents phantom reads
+  - `@Transactional (isolation=Isolation.SERIALIZABLE)`
+
+  Transaction propagation
+  `@Transactional(propagation=Propagation.REQUIRES_NEW)`
+
+Propagation Type | If NO current transaction (txn) exists | If there IS a current transaction (txn)
+--- | --- | ---
+MANDATORY | Throw exception | Use current txn
+NEVER | Don't create a txn, run method without a txn | Throw exception
+NOT_SUPPORTED | Don't create a txn, run method without a txn | Suspend current txn, run method without a txn
+SUPPORTS | Don't create a txn, run method without a txn | Use current txn
+REQUIRED (default) | Create a new txn | Use current txn
+REQUIRES_NEW | Create a new txn | Suspend current txn, create a new independent txn
+NESTED | Create a new txn | Create a new nested txn
+
