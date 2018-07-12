@@ -18,22 +18,43 @@ Spring uses the same API for global vs. local.
 
 `PlatformTransactionManager` abstraction hides implementation details.
 
-Spring’s `PlatformTransactionManager` is the base interface for the abstraction
+Spring’s `PlatformTransactionManager` is the base interface for the abstraction, possible implementations:
 
-- DataSourceTransactionManager
-- JmsTransactionManager
-- JpaTransactionManager
-- JtaTransactionManager
-- WebLogicJtaTransactionManager
-- WebSphereUowTransactionManager
+- `DataSourceTransactionManager`
+- `JmsTransactionManager`
+- `JpaTransactionManager`
+- `JtaTransactionManager`
+- `WebLogicJtaTransactionManager`
+- `WebSphereUowTransactionManager`
 - and more...
 
+Turning on by annotatiooin on configuration class `@EnableTransactionManagement`
+
 ```java
-@Bean
-// bean name is 'transactionManager' important for Spring internals
-public PlatformTransactionManager transactionManager(DataSource dataSource) {
-    return new DataSourceTransactionManager(dataSource);
+@Configuration
+@EnableTransactionManagement
+public class TxnConfig {
+    @Bean
+    // bean name is 'transactionManager' important for Spring internals
+    public PlatformTransactionManager transactionManager(DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
+    }
 }
 ```
 
-Other possible managers: `JtaTransactionManager`, `WebLogicJtaTransactionManager`, `WebSphereUowTransactionManager`
+Adding transactional behaviour by `@Transactional` annotation.
+
+```java
+public class RewardNetworkImpl implements RewardNetwork { @Transactional
+public RewardConfirmation rewardAccountFor(Dining d) {
+// atomic unit-of-work
+} }
+```
+
+- Target object wrapped in a proxy. Uses an Around advice
+- Proxy implements the following behavior
+  - Transaction started before entering the method
+  - Commit at the end of the method
+  - Rollback by default if method throws a RuntimeException (can be overridden)
+- Transaction context bound to current thread. 
+- All controlled by configuration
