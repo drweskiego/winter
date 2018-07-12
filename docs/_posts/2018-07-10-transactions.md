@@ -87,7 +87,7 @@ public class RewardNetworkImpl implements RewardNetwork { @Transactional
     // checked exceptions needs to be explicite given
     // safe (no rollback) exceptions can be also provided
     @Transactional(rollbackFor=MyCheckedException.class, noRollbackFor={JmxException.class, MailException.class})
-    public RewardConfirmation rewardAccountFor(Dining d) throws Exception { 
+    public RewardConfirmation rewardAccountFor(Dining d) throws Exception {
         // ...
     }
 }
@@ -118,7 +118,7 @@ public class RewardNetworkImpl implements RewardNetwork { @Transactional
 
 ## Transaction propagation
 
-  `@Transactional(propagation=Propagation.REQUIRES_NEW)`
+`@Transactional(propagation=Propagation.REQUIRES_NEW)`
 
 Propagation Type | If NO current transaction (txn) exists | If there IS a current transaction (txn)
 --- | --- | ---
