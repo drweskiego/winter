@@ -43,7 +43,7 @@ public class TxnConfig {
 ```
 
 Adding transactional behaviour by `@Transactional` annotation (Spring package).
-Spring also support `javax.transaction.Transactional` which provides fewer options.
+Spring also support `javax.transaction.Transactional` which provides fewer options (propagation, `rollbackOn`, `dontRollbackOn`)
 
 ```java
 public class RewardNetworkImpl implements RewardNetwork { 
@@ -118,6 +118,27 @@ public class RewardNetworkImpl implements RewardNetwork { @Transactional
 
 ## Transaction propagation
 
+```java
+public class ClientServiceImpl implements ClientService {
+    @Autowired
+    private AccountService accountService;
+
+    @Transactional
+    public void updateClient(Client c)
+    { 
+    // …
+        this.accountService.update(c.getAccounts());
+    }
+}
+
+public class AccountServiceImpl implements AccountService
+{
+    @Transactional
+    public void update(List <Account> l)
+    { // … }
+}
+```
+
 `@Transactional(propagation=Propagation.REQUIRES_NEW)`
 
 Propagation Type | If NO current transaction (txn) exists | If there IS a current transaction (txn)
@@ -129,3 +150,61 @@ SUPPORTS | Don't create a txn, run method without a txn | Use current txn
 REQUIRED (default) | Create a new txn | Use current txn
 REQUIRES_NEW | Create a new txn | Suspend current txn, create a new independent txn
 NESTED | Create a new txn | Create a new nested txn
+
+## Programmatic Transactions  - `TransactionTemplate`
+
+```java
+public interface TransactionCallback<T> {
+    public T doInTransaction(TransactionStatus status) throws Exception;
+}
+```
+
+```java
+// no @Transactional
+public RewardConfirmation rewardAccountFor(Dining dining) {
+    // ...
+    return new TransactionTemplate(txManager).execute( (status) -> {
+        try {
+            // ...
+            accountRepository.updateBeneficiaries(account);
+            confirmation = rewardRepository.confirmReward(contribution, dining);
+        }
+        catch (RewardException e) {
+            // manual rollback request 
+            status.setRollbackOnly();
+            confirmation = new RewardFailure();
+        }
+        return confirmation;
+        }
+    );
+}
+```
+
+## Read only transactions
+
+```java
+public void rewardAccount1() {
+    // two connections ???
+    jdbcTemplate.queryForList(…);
+    jdbcTemplate.queryForInt(…);
+}
+
+@Transactional(readOnly=true)
+public void rewardAccount2() {
+    // single connection
+    jdbcTemplate.queryForList(…);
+    jdbcTemplate.queryForInt(…);
+}
+
+// With a high isolation level, a read-only transaction prevents
+// data from being modified until the transaction commits
+@Transactional(readOnly=true, isolation=Isolation.REPEATABLE_READ)
+public void myAccounts(long userId) {
+    List accounts = jdbcTemplate.queryForList
+        ("SELECT * FROM Accounts WHERE user = ?", userId);
+    process(accounts);
+    int nAccounts = jdbcTemplate.queryForInt
+        ("SELECT count(*) FROM Accounts WHERE user = ?", userId);
+    assert accounts.size() == nAccounts;
+}
+```
