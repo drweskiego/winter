@@ -135,7 +135,9 @@ public class AccountServiceImpl implements AccountService
 {
     @Transactional
     public void update(List <Account> l)
-    { // … }
+    {
+        // …
+    }
 }
 ```
 
