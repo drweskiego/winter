@@ -185,26 +185,65 @@ public RewardConfirmation rewardAccountFor(Dining dining) {
 ```java
 public void rewardAccount1() {
     // two connections ???
-    jdbcTemplate.queryForList(…);
-    jdbcTemplate.queryForInt(…);
+    jdbcTemplate.queryForList("...");
+    jdbcTemplate.queryForInt("...");
 }
 
 @Transactional(readOnly=true)
 public void rewardAccount2() {
     // single connection
-    jdbcTemplate.queryForList(…);
-    jdbcTemplate.queryForInt(…);
+    jdbcTemplate.queryForList("...");
+    jdbcTemplate.queryForInt("...");
 }
 
 // With a high isolation level, a read-only transaction prevents
 // data from being modified until the transaction commits
 @Transactional(readOnly=true, isolation=Isolation.REPEATABLE_READ)
 public void myAccounts(long userId) {
-    List accounts = jdbcTemplate.queryForList
-        ("SELECT * FROM Accounts WHERE user = ?", userId);
+    List accounts = jdbcTemplate.queryForList ("SELECT * FROM Accounts WHERE user = ?", userId);
     process(accounts);
-    int nAccounts = jdbcTemplate.queryForInt
-        ("SELECT count(*) FROM Accounts WHERE user = ?", userId);
+    int nAccounts = jdbcTemplate.queryForInt ("SELECT count(*) FROM Accounts WHERE user = ?", userId);
     assert accounts.size() == nAccounts;
 }
 ```
+
+## Multiple transaction managers
+
+**Important**: Separate transaction managers = separate transactions!
+
+```java
+@Bean
+public PlatformTransactionManager myOtherTransactionManager() {
+    return new DataSourceTransactionManager(dataSource1());
+}
+
+@Bean
+@Primary
+public PlatformTransactionManager transactionManager() {
+    return new DataSourceTransactionManager(dataSource2());
+}
+
+
+@Transactional("myOtherTransactionManager")
+public void rewardAccount1() {
+    jdbcTemplate.queryForList("...");
+    jdbcTemplate.queryForInt("...");
+}
+
+// uses primary manager
+@Transactional
+public void rewardAccount2() {
+    jdbcTemplate.queryForList("...");
+    jdbcTemplate.queryForInt("...");
+}
+```
+
+## Global transactions
+
+- Also called distributed transactions
+- Involve multiple dissimilar resources
+- Global transactions typically require JTA and specific drivers (XA drivers)
+  - Two-phase commit protocol
+- Many possible strategies
+  - Spring allows you to switch easily from a non-JTA to a JTA transaction policy
+  - Just change the type of the transaction manager
