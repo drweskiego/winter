@@ -48,10 +48,10 @@ ApplicationContext context = SpringApplication.run( ApplicationConfig.class );
 // No need for bean id if type is unique
 TransferService ts1 = context.getBean(TransferService.class );
 // Use typed method to avoid cast
-TransferService ts2 = context.getBean(“transferService”, TransferService.class);
+TransferService ts2 = context.getBean("transferService", TransferService.class);
 // Classic way: cast is needed
 // name from method name id no defined in @Bean
-TransferService ts3 = (TransferService) context.getBean(“transferService”);
+TransferService ts3 = (TransferService) context.getBean("transferService");
 ```
 
 It is **not illegal** to define the same bean more than once
