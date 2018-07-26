@@ -6,7 +6,7 @@ title: Spring Data
 
 Instant repositories
 
-Reposotory is alweys defined as an **interface** extending `Repository<T, K>` only.
+Reposotory is always defined as an **interface** extending `Repository<T, K>` only.
 
 Spring implements interface and creates instances as Spring Beans (using JavaProxy) during runtime
 
@@ -23,12 +23,11 @@ Spring provides annotations for other data stores
 
 Spring Boot automatically scans for repository interfaces
 
-- Starts in package of @SpringBootApplication class and scans all subpackages
+- Starts in package of `@SpringBootApplication` class and scans all subpackages
 - overriden by annotation on `@Configuration` class: `@EnableJpaRepositories(basePackages="com.acme.repository")`
 
 
-Spring autogenerates implementation for name convention<br>
-`find(First)By<DataMember><Op>`
+Spring autogenerates implementation for name convention `find(First)By<DataMember><Op>`
 
 - `(First)` - oprional
 - `<DataMember>` - class/entity field name
@@ -76,7 +75,7 @@ public interface CustomerRepository extends CrudRepository<Customer, Long> {
     public List<Customer> findByOrderDateBetween(Date d1, Date d2);
 
     // query language dependent on underlying product (here JPQL)
-    @Query(“SELECT c FROM Customer c WHERE c.email NOT LIKE '%@%'”)
+    @Query("SELECT c FROM Customer c WHERE c.email NOT LIKE '%@%'")
     public List<Customer> findInvalidEmails();
 
     // empty result properly wrapped into Optional
