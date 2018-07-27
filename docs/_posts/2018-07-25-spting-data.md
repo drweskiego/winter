@@ -13,7 +13,7 @@ Spring implements interface and creates instances as Spring Beans (using JavaPro
 - CRUD methods auto-generated
 - Paging, custom queries and sorting supported
 
-Repositories can be implemented for entities annotated with normal JPA annotattion (`@Entity`, `@Id` and so on)
+Repositories can be implemented for entities annotated with normal JPA annotation (`@Entity`, `@Id` and so on)
 
 Spring provides annotations for other data stores
  - similar annotations to JPA
@@ -24,14 +24,14 @@ Spring provides annotations for other data stores
 Spring Boot automatically scans for repository interfaces
 
 - Starts in package of `@SpringBootApplication` class and scans all subpackages
-- overriden by annotation on `@Configuration` class: `@EnableJpaRepositories(basePackages="com.acme.repository")`
+- overridden by annotation on `@Configuration` class: `@EnableJpaRepositories(basePackages="com.acme.repository")`
 
 
-Spring autogenerates implementation for name convention `find(First)By<DataMember><Op>`
+Spring auto-generates implementation for name convention `find(First)By<DataMember><Op>`
 
-- `(First)` - oprional
+- `(First)` - optional
 - `<DataMember>` - class/entity field name
-- `<Op>` - operation datamember against method args,
+- `<Op>` - operation data-member against method args,
   - `GreaterThan`, `NotEquals`, `Between`, `Like`, `IgnoreCase`, ...
   - No `<Op>` for Equals - this is default
 
