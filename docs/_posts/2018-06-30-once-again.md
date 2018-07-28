@@ -18,7 +18,8 @@ public class ApplicationConfig {
 
     @Bean
     @Description("Provides access to data from the Books table")
-    // @Autowired DataSource also possible
+    // DataSource autowired from other configuration automatically
+    // alternatively @Autowired can be used on field etc.
     public BookRepository bookRepository(DataSource dataSource) {
         return new JdbcBookService(dataSource);
     }
