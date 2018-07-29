@@ -117,10 +117,11 @@ db.password=secret45
 
 ```java
 @Configuration
-@PropertySource ( "classpath:/com/organization/config/app.properties" )
-@PropertySource ( "file:config/local-${ENV}.properties" )
+@PropertySource("classpath:/com/organization/config/app.properties")
+@PropertySource("file:config/local-${ENV}.properties")
 public class DbConfig {
     Environment env;
+
     @Autowired
     public DbConfig(Environment env) {
         this.env = env; 
@@ -180,8 +181,8 @@ class AnotherConfig {
 
 ```java
 @Configuration
-@Profile(“jpa”)
-@PropertySource ( “dev.properties” )
+@Profile("jpa")
+@PropertySource ("dev.properties")
 public class DataSourceConfig {
     @Bean(name="dataSource")
     @Profile("dev")
@@ -225,9 +226,9 @@ public class TransferServiceImpl implements TransferService {
     // accountService.ifPresent( s -> {...});
 
     @Autowired(required=false)
-    public void setAccountRepository(
-        @Qualifier("jdbcAccountRepository") AccountRepository a
-        ) { this.accountRepository = a; }
+    public void setAccountRepository(@Qualifier("jdbcAccountRepository") AccountRepository a) {
+        this.accountRepository = a;
+    }
 
     @Autowired
     public TransferServiceImpl (@Qualifier("jpaAccountRepository") AccountRepository accRep) {}
