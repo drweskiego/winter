@@ -81,9 +81,12 @@ JDK Proxy | CGLib Proxy
 --- | ---
 Also called dynamic proxies     | NOT built into JDK
 API is built into the JDK       | Included in Spring jars
-Requirements: Java interface(s) | Used when interface not available
-All interfaces proxied          | **Cannot** be applied to **final** classes or methods
-                                | Uses [Objenesis](http://objenesis.org/) for constructors with args
+Requirements: Java interface(s) | Used when interface not available (**only!**)
+All interfaces proxied          | **Cannot** be applied to **final** classes or methods nor **private** methods
+Only **public** method proxied  | Uses [Objenesis](http://objenesis.org/) for constructors with args
+
+When class implements interface(s) and adds own methods, own methods are not proxied, coz Spring be default uses JDK Proxy for beans implementing interfaces.
+
 
 [Spring docs](https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#aop-pfb-proxy-types)
 
