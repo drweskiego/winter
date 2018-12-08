@@ -29,6 +29,7 @@ Spring Boot automatically scans for repository interfaces
 
 Spring auto-generates implementation for name convention `find(First)By<DataMember><Op>`
 
+- `find` - `get` and `read` also supported
 - `(First)` - optional
 - `<DataMember>` - class/entity field name
 - `<Op>` - operation data-member against method args,
@@ -38,7 +39,7 @@ Spring auto-generates implementation for name convention `find(First)By<DataMemb
 
 
  ```java
- // somwere in Spring marker interface defined
+ // somewere in Spring marker interface defined
 public interface Repository<T, ID> { }
 public interface CrudRepository<T, ID extends Serializable> extends Repository<T, ID> {
     public <S extends T> save(S entity);
