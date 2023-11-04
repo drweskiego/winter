@@ -1,7 +1,7 @@
 # Drodzy sąsiedzi
 
 Zgodnie z ustaleniami na zebraniu z Miejskim Inżynierem Ruchu mieszkańcy mogą do 5 października przesłać swoje propozycje zmian organizacji ruchu, które wyeliminują ogromny ruch tranzytowy z naszych ulic osiedlowych. 
-Zgłoszenia można kierować na adres e-mail: (biuro@ropodolany.pl)
+Zgłoszenia można kierować na adres e-mail: (mailto:biuro@ropodolany.pl)
 
 Więcej informacji pod linkiem:
 (https://podolany.info/aktualnosci/artykuly/384/spotkanie-miejskiego-inzyniera-ruchu-z-mieszkancami)
