@@ -4,7 +4,7 @@ Zgodnie z ustaleniami na zebraniu z Miejskim Inżynierem Ruchu mieszkańcy mogą
 Zgłoszenia można kierować na adres e-mail: (biuro@ropodolany.pl)
 
 Więcej informacji pod linkiem:
-https://podolany.info/aktualnosci/artykuly/384/spotkanie-miejskiego-inzyniera-ruchu-z-mieszkancami
+(https://podolany.info/aktualnosci/artykuly/384/spotkanie-miejskiego-inzyniera-ruchu-z-mieszkancami)
 
 Zachęcamy do przesłania propozycji zmian. Poniżej linki do propozycji jakie już wysłaliśmy do RO, można się posłużyć ich treścią, aby zwiększyć presję na Radę Osiedla i pokazać, że jest nas więcej:
 
